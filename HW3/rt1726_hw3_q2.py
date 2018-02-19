@@ -130,30 +130,3 @@ class MyList:
     def __iter__(self):
         for i in range(self.n):
             yield self.data[i]
-
-
-
-a = MyList()
-a.resize(5)
-a.append(12)
-a.append(5)
-a.append(33)
-a.append(6)
-b = MyList()
-b.append(7)
-b.append(12)
-print(a)
-print(b)
-#print(a + b)python lab4_q1.py
-
-#print(a[-1])
-#print(2 * a)
-#print(a.insert(-1, 4))
-#a = a.pop()
-#print(a)
-#a = a.pop()
-#print(a)
-#a = a.pop()
-#print(a)
-#print(a.capacity)
-print(a + b)
