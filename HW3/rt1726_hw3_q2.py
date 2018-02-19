@@ -29,9 +29,9 @@ class MyList:
 
     def __add__(self, other):
         new_MyList = MyList()
-        for i in self.data:
+        for i in self:
             new_MyList.append(i)
-        for i in other.data:
+        for i in other:
             new_MyList.append(i)
         return new_MyList
 
@@ -45,9 +45,10 @@ class MyList:
             if item < self.n or item > -(self.n):
                 if item < 0:
                     item += self.n
+                return self.data[item]
             else:
                 raise IndexError("invalid index")
-            return self.data[item]
+            
             '''
             elif(isinstance(item, slice)):
             if item.start == None:
@@ -95,6 +96,8 @@ class MyList:
 
     def insert(self, index, val):
         if index <= self.n and index >= -self.n:
+            if index < 0:
+                index += self.n
             newList = MyList()
             if self.n == self.capacity:
                 newList.resize(2*self.capacity)
@@ -109,25 +112,24 @@ class MyList:
         else:
             raise IndexError
 
-    def pop(self, index = None):
-        if index is None:
-            newList = MyList()
-            newList.resize(self.capacity - 1)
-            for i in range(len(self) - 1):
-                newList.append(self[i])
-            return newList
-        else:
-            if index <= self.n and index >= -self.n:
-                newList = MyList()
-                newList.resize(self.capacity - 1)
-                for i in range(index):
-                    newList.append(self[i])
-                for i in range(index + 1, len(self)):
-                    newList.append(self[i])
-                return newList
-            else:
-                raise IndexError
+    def pop(self):
+        newList = MyList()
+        if self.n < self.capacity / 4:
+            self.resize(self.capacity // 2)
+        i = self.n
+        while self[i-1] == None:
+            i -= 1
+        index = 0
+        index = i
+        for j in range(index-1):
+            newList.append(self[j])
+        for m in range(index-1, self.n):
+            newList.append(None)
+        return newList
 
+    def __iter__(self):
+        for i in range(self.n):
+            yield self.data[i]
 
 
 
@@ -139,10 +141,19 @@ a.append(33)
 a.append(6)
 b = MyList()
 b.append(7)
+b.append(12)
 print(a)
-#print(a + b)
+print(b)
+#print(a + b)python lab4_q1.py
+
 #print(a[-1])
 #print(2 * a)
-print(a.insert(1, 4))
-print(a.pop(0))
+#print(a.insert(-1, 4))
+#a = a.pop()
+#print(a)
+#a = a.pop()
+#print(a)
+#a = a.pop()
+#print(a)
+#print(a.capacity)
 print(a + b)
